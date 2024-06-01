@@ -9,8 +9,8 @@ public class PersonManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("PopPersonSet1", 5f, 5f);
-        InvokeRepeating("PopPersonSet2", 10f, 5f);
+        //InvokeRepeating("PopPersonSet1", 5f, 5f);
+        //InvokeRepeating("PopPersonSet2", 10f, 5f);
     }
 
     // Update is called once per frame

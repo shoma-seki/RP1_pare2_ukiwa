@@ -8,9 +8,9 @@ public class PersonScript : MonoBehaviour
 {
     enum PersonSTATE
     {
-        Help, FloatPull, Float
+        Help, FloatPull, Float, False
     }
-    private int State = (int)PersonSTATE.Help;
+    private PersonSTATE State = PersonSTATE.Help;
 
     public Sprite sprite1; // 新しいスプライト1
     public Sprite sprite2; // 新しいスプライト2
@@ -22,6 +22,8 @@ public class PersonScript : MonoBehaviour
     private Vector2 position;
     private Vector2 velocity = Vector2.zero;
     [SerializeField] private float speed;
+
+    private bool isSharkCollision = false;
 
     // Start is called before the first frame update
     void Start()
@@ -35,21 +37,25 @@ public class PersonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (State == (int)PersonSTATE.Help)
+        if (State == PersonSTATE.False)
+        {
+            DestroySelf();
+        }
+        if (State == PersonSTATE.Help)
         {
             Collider2D.isTrigger = true;
         }
-        if (State == (int)PersonSTATE.Float || State == (int)PersonSTATE.FloatPull)
-        {
-            // Collider2D.isTrigger = false;
-        }
-        if (State == (int)PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
+        //if (State == (int)PersonSTATE.Float || State == (int)PersonSTATE.FloatPull)
+        //{
+        //    // Collider2D.isTrigger = false;
+        //}
+        if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
         {
             velocity = Vector2.down;
         }
-        if (State == (int)PersonSTATE.FloatPull && Input.GetKeyUp(KeyCode.Space))
+        if (State == PersonSTATE.FloatPull && Input.GetKeyUp(KeyCode.Space))
         {
-            State = (int)PersonSTATE.Float;
+            State = PersonSTATE.Float;
         }
 
         position += velocity * speed * Time.deltaTime;
@@ -58,7 +64,20 @@ public class PersonScript : MonoBehaviour
 
         velocity = Vector2.zero;
 
-
+        if (isSharkCollision)
+        {
+            if (State == PersonSTATE.Help)
+            {
+                State = PersonSTATE.False;
+            }
+            if (State == PersonSTATE.Float || State == PersonSTATE.FloatPull)
+            {
+                State = PersonSTATE.Help;
+                ChangeSprite(sprite1);
+            }
+            isSharkCollision = false;
+        }    
+        
         //Debug.Log(Collider2D.isTrigger);
     }
 
@@ -70,28 +89,19 @@ public class PersonScript : MonoBehaviour
             if (collision.GetComponent<FloatRingScript>().GetState() == (int)FloatRingScript.STATE.False)
             {
                 ChangeSprite(sprite2);
-                if (State == (int)PersonSTATE.Help)
+                if (State == PersonSTATE.Help)
                 {
-                    State = (int)PersonSTATE.FloatPull;
+                    State = PersonSTATE.FloatPull;
                 }
             }
         }
         if (collision.gameObject.tag == "Person")
         {
             Debug.Log("person");
-            if (State == (int)PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
+            if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
             {
                 collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.down * speed);
             }
-        }
-    }
-
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Person")
-        {
-            Debug.Log("person");
-            //collision.gameObject.GetComponent<PersonScript>().SetVelocity(velocity);
         }
     }
 
@@ -102,4 +112,8 @@ public class PersonScript : MonoBehaviour
     }
 
     public void SetVelocity(Vector2 velocity) { this.velocity = velocity; }
+
+    private void DestroySelf() { Destroy(this.gameObject); }
+
+    public void SetIsSharkCollision(bool isSharkCollision) { this.isSharkCollision = isSharkCollision; }
 }
