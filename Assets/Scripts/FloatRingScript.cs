@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FloatRingScript : MonoBehaviour
 {
-    enum STATE
+    public enum STATE
     {
-        Push, Pull, False
+        Push, Float, False
     }
 
     [SerializeField] float speed;
@@ -33,38 +34,46 @@ public class FloatRingScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (State == (int)STATE.Push)
+        if (State == (int)STATE.Push && Input.GetKey(KeyCode.Space))
         {
             direction = aimPosition - position;
             velocity = direction.normalized * speed;
             position += velocity * Time.deltaTime;
         }
-        if (State == (int)STATE.Pull)
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
+            State = (int)STATE.Float;
+        }
+        if (State != (int)STATE.False)
+        {
+            if ((Mathf.Abs(aimPosition.x - position.x) <= 0.3f && Mathf.Abs(aimPosition.y - position.y) <= 0.3f))
             {
-                direction = Vector2.down;
-                velocity = direction.normalized * speed;
-                position += velocity * Time.deltaTime;
+                State = (int)STATE.Float;
             }
+        }
+        if (State == (int)STATE.False)
+        {
+            DestroySelf();
         }
 
         transform.position = position;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         if (other.gameObject.tag == "Person")
         {
-            State = (int)STATE.Pull;
+            if (State == (int)STATE.Float)
+            {
+                State = (int)STATE.False;
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void DestroySelf()
     {
-        if (collision.gameObject.tag == "Person")
-        {
-            State = (int)STATE.Pull;
-        }
+        Destroy(this.gameObject);
     }
+
+    public int GetState() { return State; }
 }

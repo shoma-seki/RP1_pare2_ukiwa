@@ -21,24 +21,27 @@ public class AimScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.Space) == false)
         {
-            position += Vector2.up * speed * Time.deltaTime;
-        }
+            if (Input.GetKey(KeyCode.W))
+            {
+                position += Vector2.up * speed * Time.deltaTime;
+            }
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            position += Vector2.down * speed * Time.deltaTime;
-        }
+            if (Input.GetKey(KeyCode.S))
+            {
+                position += Vector2.down * speed * Time.deltaTime;
+            }
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            position += Vector2.left * speed * Time.deltaTime;
-        }
+            if (Input.GetKey(KeyCode.A))
+            {
+                position += Vector2.left * speed * Time.deltaTime;
+            }
 
-        if (Input.GetKey(KeyCode.D))
-        {
-            position += Vector2.right * speed * Time.deltaTime;
+            if (Input.GetKey(KeyCode.D))
+            {
+                position += Vector2.right * speed * Time.deltaTime;
+            }
         }
 
         if (position.x < -13.00f)
