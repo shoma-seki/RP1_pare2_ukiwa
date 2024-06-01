@@ -76,8 +76,8 @@ public class PersonScript : MonoBehaviour
                 ChangeSprite(sprite1);
             }
             isSharkCollision = false;
-        }    
-        
+        }
+
         //Debug.Log(Collider2D.isTrigger);
     }
 
@@ -116,4 +116,6 @@ public class PersonScript : MonoBehaviour
     private void DestroySelf() { Destroy(this.gameObject); }
 
     public void SetIsSharkCollision(bool isSharkCollision) { this.isSharkCollision = isSharkCollision; }
+
+    public void SetFalse() { State = PersonSTATE.False; }
 }
