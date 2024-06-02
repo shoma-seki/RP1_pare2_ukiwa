@@ -8,9 +8,11 @@ public class PersonScript : MonoBehaviour
 {
     enum PersonSTATE
     {
-        Help, FloatPull, Float, False
+        Help, Approach, FloatPull, Float, False
     }
     private PersonSTATE State = PersonSTATE.Help;
+    private PersonSTATE PrebState = PersonSTATE.Help;
+    private float changeStateCount;
 
     public Sprite sprite1; // 新しいスプライト1
     public Sprite sprite2; // 新しいスプライト2
@@ -20,8 +22,11 @@ public class PersonScript : MonoBehaviour
     private Rigidbody2D Rigidbody2;
 
     private Vector2 position;
+    private Vector2 targetPosition = new Vector2(-100, -100);
+    private Vector2 direction;
     private Vector2 velocity = Vector2.zero;
     [SerializeField] private float speed;
+    private float newSpeed;
 
     private bool isSharkCollision = false;
 
@@ -44,6 +49,47 @@ public class PersonScript : MonoBehaviour
         if (State == PersonSTATE.Help)
         {
             Collider2D.isTrigger = true;
+            if (targetPosition != new Vector2(-100, -100))
+            {
+                PrebState = State;
+                State = PersonSTATE.Approach;
+                Debug.Log(PrebState);
+            }
+        }
+        if (targetPosition == new Vector2(-100, -100))
+        {
+            if (State != PersonSTATE.FloatPull)
+            {
+                if (PrebState == PersonSTATE.Help)
+                {
+                    changeStateCount += Time.deltaTime;
+                    if (changeStateCount >= 1)
+                    {
+                        State = PersonSTATE.Help;
+                        direction = Vector2.zero;
+                        changeStateCount = 0;
+                    }
+                }
+                if (PrebState == PersonSTATE.Float)
+                {
+                    if (changeStateCount >= 1)
+                    {
+                        State = PersonSTATE.Float;
+                        direction = Vector2.zero;
+                        changeStateCount = 0;
+                    }
+                }
+            }
+        }
+        if (State == PersonSTATE.Approach)
+        {
+            newSpeed = 1;
+            direction = targetPosition - position;
+            velocity = direction.normalized * newSpeed;
+        }
+        else
+        {
+            newSpeed = speed;
         }
         //if (State == (int)PersonSTATE.Float || State == (int)PersonSTATE.FloatPull)
         //{
@@ -51,18 +97,18 @@ public class PersonScript : MonoBehaviour
         //}
         if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
         {
-            velocity = Vector2.down;
+            direction = Vector2.down;
         }
         if (State == PersonSTATE.FloatPull && Input.GetKeyUp(KeyCode.Space))
         {
             State = PersonSTATE.Float;
         }
 
-        position += velocity * speed * Time.deltaTime;
+        velocity = direction.normalized * newSpeed;
+        position += velocity * Time.deltaTime;
         transform.position = position;
-        //Rigidbody2.position = position;
 
-        velocity = Vector2.zero;
+        direction = Vector2.zero;
 
         if (isSharkCollision)
         {
@@ -78,7 +124,7 @@ public class PersonScript : MonoBehaviour
             isSharkCollision = false;
         }
 
-        //Debug.Log(Collider2D.isTrigger);
+        Debug.Log(State);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -100,7 +146,7 @@ public class PersonScript : MonoBehaviour
             Debug.Log("person");
             if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
             {
-                collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.down * speed);
+                collision.gameObject.GetComponent<PersonScript>().SetDirectionSpeed(Vector2.down, speed);
             }
         }
     }
@@ -111,11 +157,16 @@ public class PersonScript : MonoBehaviour
         spriteRenderer.sprite = newSprite;
     }
 
-    public void SetVelocity(Vector2 velocity) { this.velocity = velocity; }
+    public void SetDirectionSpeed(Vector2 direcrion, float speed)
+    {
+        this.direction = direcrion;
+        this.newSpeed = speed;
+    }
 
     private void DestroySelf() { Destroy(this.gameObject); }
 
     public void SetIsSharkCollision(bool isSharkCollision) { this.isSharkCollision = isSharkCollision; }
 
     public void SetFalse() { State = PersonSTATE.False; }
+    public void SetTargetPosition(Vector2 targetPosition) { this.targetPosition = targetPosition; }
 }
