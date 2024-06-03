@@ -98,8 +98,10 @@ public class PersonScript : MonoBehaviour
             State = PersonSTATE.Float;
             preState = PersonSTATE.Float;
         }
-
-        velocity = direction.normalized * speed;
+        if (State != PersonSTATE.Float)
+        {
+            velocity = direction.normalized * speed;
+        }
         position += velocity * Time.deltaTime;
         transform.position = position;
 
