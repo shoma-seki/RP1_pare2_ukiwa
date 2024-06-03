@@ -65,7 +65,20 @@ public class FloatRingScript : MonoBehaviour
         {
             if (State == (int)STATE.Float)
             {
-                State = (int)STATE.False;
+                if (other.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonScript.PersonSTATE.Help || other.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonScript.PersonSTATE.Approach)
+                {
+                    if (Input.GetKey(KeyCode.Space) == false)
+                    {
+                        other.gameObject.GetComponent<PersonScript>().SetState(PersonScript.PersonSTATE.Float);
+                    }
+
+                    if (Input.GetKey(KeyCode.Space) == true)
+                    {
+                        other.gameObject.GetComponent<PersonScript>().SetState(PersonScript.PersonSTATE.FloatPull);
+                    }
+                    other.gameObject.GetComponent<PersonScript>().SetTargetPosition(new Vector2(-100, -100));
+                    State = (int)STATE.False;
+                }
             }
         }
     }
