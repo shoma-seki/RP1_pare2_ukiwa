@@ -7,7 +7,7 @@ public class SharkScript : MonoBehaviour
 {
     public enum SharkSTATE
     {
-        Normal, Approach,Float ,False
+        Normal, Approach, Float, False
     }
     private SharkSTATE state = SharkSTATE.Normal;
 
@@ -15,12 +15,16 @@ public class SharkScript : MonoBehaviour
     private Vector2 position;
     private Vector2 targetPosition = new Vector2(-100, -100);
     private Vector2 direction;
+    private Vector2 startDirection;
     private Vector2 velocity;
 
     private SpriteRenderer spriteRenderer;
 
     public Sprite shark;
     public Sprite floatShark;
+
+    public float kFloatTime;
+    private float floatTime;
 
     // Start is called before the first frame update
     void Start()
@@ -29,12 +33,13 @@ public class SharkScript : MonoBehaviour
         position = transform.position;
         if (transform.position.x < 0)
         {
-            direction = Vector2.right;
+            startDirection = Vector2.right;
         }
         if (transform.position.x > 0)
         {
-            direction = Vector2.left;
+            startDirection = Vector2.left;
         }
+        direction = startDirection;
     }
 
     // Update is called once per frame
@@ -58,6 +63,17 @@ public class SharkScript : MonoBehaviour
             position += velocity;
             transform.position = position;
         }
+        if (state == SharkSTATE.Float)
+        {
+            direction = Vector2.zero;
+            floatTime += Time.deltaTime;
+            if (floatTime >= kFloatTime)
+            {
+                state = SharkSTATE.Normal;
+                floatTime = 0;
+                direction = startDirection;
+            }
+        }
         if (state == SharkSTATE.False)
         {
             DestroySelf();
@@ -66,6 +82,25 @@ public class SharkScript : MonoBehaviour
         {
             spriteRenderer.flipX = true;
         }
+
+        SpriteState();
+    }
+
+    private void SpriteState()
+    {
+        if (state == SharkSTATE.Normal || state == SharkSTATE.Approach)
+        {
+            ChangeSprite(shark);
+        }
+        if (state == SharkSTATE.Float)
+        {
+            ChangeSprite(floatShark);
+        }
+    }
+
+    private void ChangeSprite(Sprite newSprite)
+    {
+        spriteRenderer.sprite = newSprite;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
