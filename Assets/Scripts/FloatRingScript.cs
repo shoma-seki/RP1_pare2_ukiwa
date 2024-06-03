@@ -81,6 +81,15 @@ public class FloatRingScript : MonoBehaviour
                 }
             }
         }
+
+        if (other.gameObject.tag == "Shark")
+        {
+            if (other.gameObject.GetComponent<SharkScript>().GetState() == (int)SharkScript.SharkSTATE.Approach || other.gameObject.GetComponent<SharkScript>().GetState() == (int)SharkScript.SharkSTATE.Normal)
+            {
+                other.gameObject.GetComponent<SharkScript>().SetState(SharkScript.SharkSTATE.Float);
+                State = (int)STATE.False;
+            }
+        }
     }
 
     private void DestroySelf()

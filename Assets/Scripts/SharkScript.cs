@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class SharkScript : MonoBehaviour
 {
-    enum SharkSTATE
+    public enum SharkSTATE
     {
-        Normal, Approach, False
+        Normal, Approach,Float ,False
     }
     private SharkSTATE state = SharkSTATE.Normal;
 
@@ -18,6 +18,9 @@ public class SharkScript : MonoBehaviour
     private Vector2 velocity;
 
     private SpriteRenderer spriteRenderer;
+
+    public Sprite shark;
+    public Sprite floatShark;
 
     // Start is called before the first frame update
     void Start()
@@ -76,4 +79,6 @@ public class SharkScript : MonoBehaviour
 
     public void SetTargetPosition(Vector2 targetPosition) { this.targetPosition = targetPosition; }
     private void DestroySelf() { Destroy(this.gameObject); }
+    public int GetState() { return (int)state; }
+    public void SetState(SharkSTATE state) { this.state = state; }
 }
