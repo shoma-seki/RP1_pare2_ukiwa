@@ -37,6 +37,8 @@ public class PersonScript : MonoBehaviour
 
     private bool isSharkCollision = false;
 
+    [SerializeField] ParticleSystem particle;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,6 +51,7 @@ public class PersonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        particle.Play();
         SpriteState();
 
         if (State == PersonSTATE.False)
