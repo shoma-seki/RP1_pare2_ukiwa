@@ -9,6 +9,8 @@ public class GroundScript : MonoBehaviour
     private float comboTime;
     public float kComboTime;
 
+    private bool isCombo;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +22,23 @@ public class GroundScript : MonoBehaviour
     {
         Debug.Log("score" + score);
         Debug.Log("combo" + combo);
-        comboTime -= Time.deltaTime;
+        if (combo > 0)
+        {
+            comboTime -= Time.deltaTime;
+        }
         if (comboTime < 0)
         {
-            comboTime = 0;
+            comboTime = kComboTime;
             combo = 0;
+        }
+
+        if (combo >= 3)
+        {
+            isCombo = true;
+        }
+        else
+        {
+            isCombo = false;
         }
     }
 
@@ -32,16 +46,11 @@ public class GroundScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Person")
         {
-            if (comboTime >= 0)
-            {
-                combo++;
-                score += combo;
-            }
-            else
-            {
-                score++;
-            }
+            combo++;
+            score += combo;
             collision.GetComponent<PersonScript>().SetFalse();
         }
     }
+
+    public bool GetIsCombo() { return isCombo; }
 }

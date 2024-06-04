@@ -8,18 +8,24 @@ public class GodScript : MonoBehaviour
 
     private Vector2 targetPosition;
 
-    private bool isAppear;
+    private GameObject ground;
+
+    private bool isCombo;
 
     // Start is called before the first frame update
     void Start()
     {
+        ground = GameObject.FindWithTag("Ground");
+
         targetPosition = new Vector2(0, -10.0f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isAppear == true)
+        isCombo = ground.gameObject.GetComponent<GroundScript>().GetIsCombo();
+
+        if (isCombo == true)
         {
             targetPosition = new Vector2(0, -5.5f);
         }
@@ -30,6 +36,4 @@ public class GodScript : MonoBehaviour
 
         transform.position = Vector2.Lerp(transform.position, targetPosition, lerp);
     }
-
-    public void SetIsAppear(bool isAppear) { this.isAppear = isAppear; }
 }

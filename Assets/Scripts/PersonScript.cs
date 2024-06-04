@@ -14,6 +14,7 @@ public class PersonScript : MonoBehaviour
     }
     private PersonSTATE State = PersonSTATE.Help;
     private PersonSTATE preState = PersonSTATE.Help;
+    private bool isCollisionFloatPull;
     private float changeTime;
 
     public Sprite helpSprite;
@@ -68,6 +69,10 @@ public class PersonScript : MonoBehaviour
                 direction = Vector2.zero;
                 targetPosition = new Vector2(-100, -100);
             }
+        }
+        if (isCollisionFloatPull)
+        {
+            State = PersonSTATE.Forrow;
         }
         if (State == PersonSTATE.Forrow)
         {
@@ -138,7 +143,15 @@ public class PersonScript : MonoBehaviour
 
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
+    //private void FixedUpdate()
+    //{
+    //    if (State == PersonSTATE.Forrow)
+    //    {
+    //        isCollisionFloatPull = false;
+    //    }
+    //}
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         //if (collision.gameObject.tag == "FloatRing")
         //{
@@ -156,21 +169,49 @@ public class PersonScript : MonoBehaviour
         //}
         if (collision.gameObject.tag == "Person")
         {
-            if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S) && collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float)
+            //if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S) && collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float)
+            //{
+            //    collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Forrow);
+            //}
+            if (collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float && State == PersonSTATE.Forrow)
             {
-                collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Forrow);
+                collision.gameObject.GetComponent<PersonScript>().SetIsCollisionFloatPull(true);
+            }
+            if (collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float && State == PersonSTATE.FloatPull)
+            {
+                collision.gameObject.GetComponent<PersonScript>().SetIsCollisionFloatPull(true);
             }
         }
     }
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "Person")
-    //    {
-    //        collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Float);
-    //        collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.zero);
-    //    }
-    //}
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Person")
+        {
+            if (collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float && State == PersonSTATE.Forrow)
+            {
+                if (isCollisionFloatPull == false)
+                {
+                    collision.gameObject.GetComponent<PersonScript>().SetIsCollisionFloatPull(isCollisionFloatPull);
+                }
+            }
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Person")
+        {
+            if (collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Forrow && State == PersonSTATE.Forrow)
+            {
+                collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Float);
+                collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.zero);
+                isCollisionFloatPull = false;
+                collision.gameObject.GetComponent<PersonScript>().SetIsCollisionFloatPull(false);
+            }
+        }
+    }
 
     void ChangeSprite(Sprite newSprite)
     {
@@ -218,4 +259,7 @@ public class PersonScript : MonoBehaviour
         preState = State;
     }
     public void SetPosition(Vector2 position) { this.position = position; }
+
+    public void SetIsCollisionFloatPull(bool isCollision) { this.isCollisionFloatPull = isCollision; }
+    public bool GetIsCollisionFloatPull() { return this.isCollisionFloatPull; }
 }
