@@ -170,3 +170,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02fa46b58c709484d98aa7a54380f2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  kComboTime: 2

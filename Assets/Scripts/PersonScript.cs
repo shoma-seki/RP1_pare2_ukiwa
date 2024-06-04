@@ -66,7 +66,6 @@ public class PersonScript : MonoBehaviour
                 direction = Vector2.zero;
                 targetPosition = new Vector2(-100, -100);
             }
-            //Debug.Log(changeTime);
         }
         if (targetPosition != new Vector2(-100, -100))
         {
@@ -77,7 +76,6 @@ public class PersonScript : MonoBehaviour
             }
         }
         //アプローチから抜ける
-        Debug.Log(State);
         if (targetPosition == new Vector2(-100, -100))
         {
             //前のステートによって変える
@@ -112,7 +110,6 @@ public class PersonScript : MonoBehaviour
             State = PersonSTATE.Float;
             preState = PersonSTATE.Float;
         }
-        Debug.Log(direction.normalized);
         velocity = direction.normalized * speed;
         position += velocity * Time.deltaTime;
         transform.position = position;
@@ -124,12 +121,11 @@ public class PersonScript : MonoBehaviour
             if (State == PersonSTATE.Help)
             {
                 State = PersonSTATE.False;
-                preState = PersonSTATE.Help;
             }
             if (State == PersonSTATE.Float || State == PersonSTATE.FloatPull)
             {
                 State = PersonSTATE.Help;
-                // ChangeSprite(sprite1);
+                preState = PersonSTATE.Help;
             }
             isSharkCollision = false;
         }
@@ -154,7 +150,6 @@ public class PersonScript : MonoBehaviour
         //}
         if (collision.gameObject.tag == "Person")
         {
-            Debug.Log("person");
             if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
             {
                 collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.down * speed);
