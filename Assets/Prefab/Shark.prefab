@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4272441245522988407}
@@ -120,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.73}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.28, y: 1.28}
+  m_Size: {x: 6.85, y: 5.47}
   m_EdgeRadius: 0
 --- !u!50 &2614120862503971584
 Rigidbody2D:
@@ -187,6 +187,18 @@ PrefabInstance:
     - target: {fileID: 3712255752658105213, guid: 97a881380f9176f4eb2386d9041e9a05, type: 3}
       propertyPath: m_Name
       value: HitCircle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123638912187821855, guid: 97a881380f9176f4eb2386d9041e9a05, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123638912187821855, guid: 97a881380f9176f4eb2386d9041e9a05, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 9123638912187821855, guid: 97a881380f9176f4eb2386d9041e9a05, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 15.17
       objectReference: {fileID: 0}
     - target: {fileID: 9123638912187821855, guid: 97a881380f9176f4eb2386d9041e9a05, type: 3}
       propertyPath: m_LocalPosition.x

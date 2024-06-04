@@ -12,11 +12,12 @@ public class GroundScript : MonoBehaviour
     private bool isCombo;
 
     public GameObject run;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -48,6 +49,7 @@ public class GroundScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Person")
         {
+            player.gameObject.GetComponent<PlayerScript>().AddFloatRing();
             combo++;
             score += combo;
             Instantiate(run, collision.transform.position, Quaternion.identity);

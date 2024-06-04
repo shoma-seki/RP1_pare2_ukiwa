@@ -10,6 +10,7 @@ TagManager:
   - Person
   - Shark
   - God
+  - FloatRingCount
   layers:
   - Default
   - TransparentFX
