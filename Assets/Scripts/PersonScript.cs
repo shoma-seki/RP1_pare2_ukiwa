@@ -10,7 +10,7 @@ public class PersonScript : MonoBehaviour
 {
     public enum PersonSTATE
     {
-        Help, Approach, FloatPull, Float, False
+        Help, Approach, FloatPull, Float, Forrow, False
     }
     private PersonSTATE State = PersonSTATE.Help;
     private PersonSTATE preState = PersonSTATE.Help;
@@ -18,7 +18,9 @@ public class PersonScript : MonoBehaviour
 
     public Sprite helpSprite;
     public Sprite floatSprite;
+    public Sprite floatPullSprite;
     public Sprite ApproachSprite;
+    public Sprite ForrowSprite;
 
     private SpriteRenderer spriteRenderer;
     private Collider2D Collider2D;
@@ -67,6 +69,10 @@ public class PersonScript : MonoBehaviour
                 targetPosition = new Vector2(-100, -100);
             }
         }
+        if (State == PersonSTATE.Forrow)
+        {
+            direction = Vector2.down;
+        }
         if (targetPosition != new Vector2(-100, -100))
         {
             if (State == PersonSTATE.Help)
@@ -76,7 +82,7 @@ public class PersonScript : MonoBehaviour
             }
         }
         //アプローチから抜ける
-        if (targetPosition == new Vector2(-100, -100))
+        if (targetPosition == new Vector2(-100, -100) && State != PersonSTATE.Forrow)
         {
             //前のステートによって変える
             if (preState == PersonSTATE.Help)
@@ -150,20 +156,21 @@ public class PersonScript : MonoBehaviour
         //}
         if (collision.gameObject.tag == "Person")
         {
-            if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S))
+            if (State == PersonSTATE.FloatPull && Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.S) && collision.gameObject.GetComponent<PersonScript>().GetState() == (int)PersonSTATE.Float)
             {
-                collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.down * speed);
+                collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Forrow);
             }
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Person")
-        {
-            collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.zero);
-        }
-    }
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Person")
+    //    {
+    //        collision.gameObject.GetComponent<PersonScript>().SetState(PersonSTATE.Float);
+    //        collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.zero);
+    //    }
+    //}
 
     void ChangeSprite(Sprite newSprite)
     {
@@ -177,13 +184,21 @@ public class PersonScript : MonoBehaviour
         {
             ChangeSprite(helpSprite);
         }
-        if (State == PersonSTATE.Float || State == PersonSTATE.FloatPull)
+        if (State == PersonSTATE.Float)
         {
             ChangeSprite(floatSprite);
         }
         if (State == PersonSTATE.Approach)
         {
             ChangeSprite(ApproachSprite);
+        }
+        if (State == PersonSTATE.FloatPull)
+        {
+            ChangeSprite(floatPullSprite);
+        }
+        if (State == PersonSTATE.Forrow)
+        {
+            ChangeSprite(ForrowSprite);
         }
     }
 
