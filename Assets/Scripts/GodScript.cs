@@ -10,7 +10,7 @@ public class GodScript : MonoBehaviour
 
     private GameObject ground;
 
-    private bool isCombo;
+    public bool isCombo;
 
     // Start is called before the first frame update
     void Start()
