@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GodScript : MonoBehaviour
 {
-    private float lerp = 0.1f;
+    private float lerp = 0.05f;
 
     private Vector2 targetPosition;
 
