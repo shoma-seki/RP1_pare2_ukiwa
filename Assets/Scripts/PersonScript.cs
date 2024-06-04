@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
@@ -65,6 +66,7 @@ public class PersonScript : MonoBehaviour
                 direction = Vector2.zero;
                 targetPosition = new Vector2(-100, -100);
             }
+            //Debug.Log(changeTime);
         }
         if (targetPosition != new Vector2(-100, -100))
         {
@@ -75,6 +77,7 @@ public class PersonScript : MonoBehaviour
             }
         }
         //アプローチから抜ける
+        Debug.Log(State);
         if (targetPosition == new Vector2(-100, -100))
         {
             //前のステートによって変える
@@ -109,6 +112,7 @@ public class PersonScript : MonoBehaviour
             State = PersonSTATE.Float;
             preState = PersonSTATE.Float;
         }
+        Debug.Log(direction.normalized);
         velocity = direction.normalized * speed;
         position += velocity * Time.deltaTime;
         transform.position = position;
@@ -130,7 +134,6 @@ public class PersonScript : MonoBehaviour
             isSharkCollision = false;
         }
 
-        //Debug.Log(Collider2D.isTrigger);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -159,16 +162,13 @@ public class PersonScript : MonoBehaviour
         }
     }
 
-    //private void OnTriggerExit2D(Collider2D collision)
-    //{
-    //    if (collision.gameObject.tag == "FloatRing")
-    //    {
-    //        if (State != PersonSTATE.Float)
-    //        {
-    //            State = PersonSTATE.Help;
-    //        }
-    //    }
-    //}
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Person")
+        {
+            collision.gameObject.GetComponent<PersonScript>().SetVelocity(Vector2.zero);
+        }
+    }
 
     void ChangeSprite(Sprite newSprite)
     {
@@ -207,4 +207,5 @@ public class PersonScript : MonoBehaviour
         State = state;
         preState = State;
     }
+    public void SetPosition(Vector2 position) { this.position = position; }
 }

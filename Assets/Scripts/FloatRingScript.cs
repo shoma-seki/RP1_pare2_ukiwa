@@ -70,6 +70,7 @@ public class FloatRingScript : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space) == false)
                     {
                         other.gameObject.GetComponent<PersonScript>().SetState(PersonScript.PersonSTATE.Float);
+                        other.gameObject.GetComponent<PersonScript>().SetPosition(transform.position);
                     }
 
                     if (Input.GetKey(KeyCode.Space) == true)
