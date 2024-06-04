@@ -13,6 +13,7 @@ public class PersonScript : MonoBehaviour
     }
     private PersonSTATE State = PersonSTATE.Help;
     private PersonSTATE preState = PersonSTATE.Help;
+    private float changeTime;
 
     public Sprite helpSprite;
     public Sprite floatSprite;
@@ -54,6 +55,16 @@ public class PersonScript : MonoBehaviour
         {
             Collider2D.isTrigger = true;
             direction = Vector2.zero;
+            changeTime = 0;
+        }
+        if (State == PersonSTATE.Float)
+        {
+            changeTime += Time.deltaTime;
+            if (changeTime > 1)
+            {
+                direction = Vector2.zero;
+                targetPosition = new Vector2(-100, -100);
+            }
         }
         if (targetPosition != new Vector2(-100, -100))
         {
@@ -98,10 +109,7 @@ public class PersonScript : MonoBehaviour
             State = PersonSTATE.Float;
             preState = PersonSTATE.Float;
         }
-        if (State != PersonSTATE.Float)
-        {
-            velocity = direction.normalized * speed;
-        }
+        velocity = direction.normalized * speed;
         position += velocity * Time.deltaTime;
         transform.position = position;
 

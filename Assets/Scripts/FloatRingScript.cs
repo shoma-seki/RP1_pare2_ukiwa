@@ -75,8 +75,8 @@ public class FloatRingScript : MonoBehaviour
                     if (Input.GetKey(KeyCode.Space) == true)
                     {
                         other.gameObject.GetComponent<PersonScript>().SetState(PersonScript.PersonSTATE.FloatPull);
+                        other.gameObject.GetComponent<PersonScript>().SetTargetPosition(new Vector2(-100, -100));
                     }
-                    other.gameObject.GetComponent<PersonScript>().SetTargetPosition(new Vector2(-100, -100));
                     State = (int)STATE.False;
                 }
             }
