@@ -11,6 +11,8 @@ public class GroundScript : MonoBehaviour
 
     private bool isCombo;
 
+    public GameObject run;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -48,6 +50,7 @@ public class GroundScript : MonoBehaviour
         {
             combo++;
             score += combo;
+            Instantiate(run, collision.transform.position, Quaternion.identity);
             collision.GetComponent<PersonScript>().SetFalse();
         }
     }
