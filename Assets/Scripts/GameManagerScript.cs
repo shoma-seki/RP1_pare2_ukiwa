@@ -21,7 +21,7 @@ public class GameManagerScript : MonoBehaviour
         }
         if (gameTime == 0)
         {
-            FadeManager.Instance.LoadScene("ResultScene", 0.5f);
+            FadeManager.Instance.LoadScene("ResultScene", 1.0f);
         }
     }
 }
