@@ -64,7 +64,8 @@ public class PersonManagerScript : MonoBehaviour
 
     private void PopPersonSet4()
     {
-        Instantiate(person, new Vector2(-3.96f, 4.88f), Quaternion.identity);
+        Instantiate(person, new Vector2(-3.96f, 9.88f), Quaternion.identity);
+        Instantiate(person, new Vector2(-4.63f, 3.26f), Quaternion.identity);
         Instantiate(person, new Vector2(-4.63f, 0.26f), Quaternion.identity);
         Instantiate(person, new Vector2(-4f, -2.26f), Quaternion.identity);
     }
@@ -78,9 +79,9 @@ public class PersonManagerScript : MonoBehaviour
 
     private void PopPersonSet5()
     {
-        Instantiate(person, new Vector2(0, 5), Quaternion.identity);
-        Instantiate(person, new Vector2(0.1f, 2), Quaternion.identity);
-        Instantiate(person, new Vector2(0.1f, -2), Quaternion.identity);
+        Instantiate(person, new Vector2(0, 8), Quaternion.identity);
+        Instantiate(person, new Vector2(0.1f, 4), Quaternion.identity);
+        Instantiate(person, new Vector2(0.1f, -4), Quaternion.identity);
         Instantiate(person, new Vector2(-0.05f, -3), Quaternion.identity);
     }
 
