@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GroundScript : MonoBehaviour
 {
-    private int score;
+    public int score;
     private int combo;
     private float comboTime;
     public float kComboTime;

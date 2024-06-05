@@ -10,6 +10,8 @@ public class PlayerScript : MonoBehaviour
     Vector2 position;
     private GameObject aim;
 
+    private AudioSource audioSource;
+
     [SerializeField] private GameObject floatRing;
     [SerializeField] private int floatRingCount;
 
@@ -22,6 +24,8 @@ public class PlayerScript : MonoBehaviour
         position = transform.position;
         aim = GameObject.FindWithTag("Aim");
         addTime = kAddRingTime;
+
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -37,8 +41,10 @@ public class PlayerScript : MonoBehaviour
         transform.position = position;
         if (Input.GetKeyDown(KeyCode.Space))
         {
+
             if (floatRingCount > 0)
             {
+                audioSource.Play();
                 floatRingCount--;
                 Instantiate(floatRing, transform.position, Quaternion.identity);
             }
