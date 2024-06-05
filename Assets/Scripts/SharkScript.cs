@@ -45,7 +45,7 @@ public class SharkScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targetPosition != new Vector2(-100, -100) && state != SharkSTATE.False)
+        if (targetPosition != new Vector2(-100, -100) && state == SharkSTATE.Normal)
         {
             state = SharkSTATE.Approach;
         }
@@ -62,6 +62,10 @@ public class SharkScript : MonoBehaviour
             velocity = direction.normalized * speed * Time.deltaTime;
             position += velocity;
             transform.position = position;
+            if (Mathf.Abs(targetPosition.x - transform.position.x) <= 1 && Mathf.Abs(targetPosition.y - transform.position.y) <= 1)
+            {
+                state = SharkSTATE.Normal;
+            }
         }
         if (state == SharkSTATE.Float)
         {
@@ -107,8 +111,11 @@ public class SharkScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Person")
         {
-            state = SharkSTATE.False;
-            collision.gameObject.GetComponent<PersonScript>().SetIsSharkCollision(true);
+            if (collision.gameObject.GetComponent<PersonScript>().GetState() != (int)PersonScript.PersonSTATE.False)
+            {
+                collision.gameObject.GetComponent<PersonScript>().SetIsSharkCollision(true);
+                state = SharkSTATE.False;
+            }
         }
     }
 

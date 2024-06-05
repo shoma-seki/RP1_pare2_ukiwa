@@ -31,7 +31,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        addTime-= Time.deltaTime;
+        addTime -= Time.deltaTime;
         if (addTime < 0)
         {
             addTime = kAddRingTime;

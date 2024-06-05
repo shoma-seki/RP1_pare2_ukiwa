@@ -11,7 +11,7 @@ public class PersonScript : MonoBehaviour
 {
     public enum PersonSTATE
     {
-        Help, Approach, FloatPull, Float, Forrow, False
+        Help, Approach, FloatPull, Float, Forrow, False, ImFalse
     }
     private PersonSTATE State = PersonSTATE.Help;
     private PersonSTATE preState = PersonSTATE.Help;
@@ -40,6 +40,7 @@ public class PersonScript : MonoBehaviour
 
     [SerializeField] ParticleSystem particle;
     private float startTime;
+    private float falseTime = 13;
 
     // Start is called before the first frame update
     void Start()
@@ -61,9 +62,26 @@ public class PersonScript : MonoBehaviour
         }
         SpriteState();
 
+        falseTime -= Time.deltaTime;
+        if (falseTime <= 0)
+        {
+            State = PersonSTATE.False;
+            startTime = 0;
+        }
         if (State == PersonSTATE.False)
         {
+            transform.Rotate(0.0f, 0.0f, 150 * Time.deltaTime, Space.World);
+            if (transform.localScale.x > 0.1f)
+            {
+                transform.localScale -= new Vector3(0.3f, 0.3f, 0.0f) * Time.deltaTime;
+            }
+            startTime = 0;
+            particle.Play();
             DestroySelf();
+        }
+        if (State == PersonSTATE.ImFalse)
+        {
+            Destroy(this.gameObject);
         }
         if (State == PersonSTATE.Help)
         {
@@ -112,6 +130,24 @@ public class PersonScript : MonoBehaviour
             {
                 State = PersonSTATE.Float;
             }
+            if (preState == PersonSTATE.False)
+            {
+                State = PersonSTATE.False;
+            }
+            if (isSharkCollision)
+            {
+                if (State == PersonSTATE.Help || State == PersonSTATE.Approach)
+                {
+                    State = PersonSTATE.False;
+                    preState = PersonSTATE.False;
+                }
+                if (State == PersonSTATE.Float || State == PersonSTATE.FloatPull || State == PersonSTATE.Forrow)
+                {
+                    State = PersonSTATE.Help;
+                    preState = PersonSTATE.Help;
+                }
+                isSharkCollision = false;
+            }
         }
         if (State == PersonSTATE.Approach)
         {
@@ -136,21 +172,6 @@ public class PersonScript : MonoBehaviour
         transform.position = position;
 
         direction = Vector2.zero;
-
-        if (isSharkCollision)
-        {
-            if (State == PersonSTATE.Help)
-            {
-                State = PersonSTATE.False;
-            }
-            if (State == PersonSTATE.Float || State == PersonSTATE.FloatPull)
-            {
-                State = PersonSTATE.Help;
-                preState = PersonSTATE.Help;
-            }
-            isSharkCollision = false;
-        }
-
     }
 
     //private void FixedUpdate()
@@ -255,11 +276,11 @@ public class PersonScript : MonoBehaviour
 
     public void SetVelocity(Vector2 velocity) { this.velocity = velocity; }
 
-    private void DestroySelf() { Destroy(this.gameObject); }
+    private void DestroySelf() { Destroy(this.gameObject, 2); }
 
     public void SetIsSharkCollision(bool isSharkCollision) { this.isSharkCollision = isSharkCollision; }
 
-    public void SetFalse() { State = PersonSTATE.False; }
+    public void SetFalse() { State = PersonSTATE.ImFalse; }
 
     public void SetTargetPosition(Vector2 targetPosition) { this.targetPosition = targetPosition; }
     public int GetState() { return (int)State; }

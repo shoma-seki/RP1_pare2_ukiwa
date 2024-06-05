@@ -49,11 +49,14 @@ public class GroundScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Person")
         {
-            player.gameObject.GetComponent<PlayerScript>().AddFloatRing();
-            combo++;
-            score += combo;
-            Instantiate(run, collision.transform.position, Quaternion.identity);
-            collision.GetComponent<PersonScript>().SetFalse();
+            if (collision.GetComponent<PersonScript>().GetState() != (int)PersonScript.PersonSTATE.False)
+            {
+                player.gameObject.GetComponent<PlayerScript>().AddFloatRing();
+                combo++;
+                score += combo;
+                Instantiate(run, collision.transform.position, Quaternion.identity);
+                collision.GetComponent<PersonScript>().SetFalse();
+            }
         }
     }
 

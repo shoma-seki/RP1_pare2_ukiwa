@@ -17,7 +17,7 @@ public class GodScript : MonoBehaviour
     {
         ground = GameObject.FindWithTag("Ground");
 
-        targetPosition = new Vector2(0, -10.0f);
+        targetPosition = new Vector2(0, -15.0f);
     }
 
     // Update is called once per frame
@@ -31,7 +31,7 @@ public class GodScript : MonoBehaviour
         }
         else
         {
-            targetPosition = new Vector2(0, -10.0f);
+            targetPosition = new Vector2(0, -15.0f);
         }
 
         transform.position = Vector2.Lerp(transform.position, targetPosition, lerp);

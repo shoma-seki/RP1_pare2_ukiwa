@@ -9,11 +9,24 @@ public class SharkManagerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //InvokeRepeating("PopEnemySet1", 5f, 60f);
-        //InvokeRepeating("PopEnemySet2", 10f, 60f);
-        //InvokeRepeating("PopEnemySet3", 15f, 60f);
-        //InvokeRepeating("PopEnemySet4", 17f, 60f);
-        //InvokeRepeating("PopEnemySet5", 20f, 60f);
+        InvokeRepeating("PopEnemySet1", 5f, 60f);
+        InvokeRepeating("PopEnemySet2", 10f, 60f);
+        InvokeRepeating("PopEnemySet3", 15f, 60f);
+        InvokeRepeating("PopEnemySet4", 17f, 60f);
+        InvokeRepeating("PopEnemySet5", 20f, 60f);
+
+        InvokeRepeating("PopEnemySet1", 25f, 60f);
+        InvokeRepeating("PopEnemySet2", 30f, 60f);
+        InvokeRepeating("PopEnemySet3", 35f, 60f);
+        InvokeRepeating("PopEnemySet4", 37f, 60f);
+        InvokeRepeating("PopEnemySet5", 40f, 60f);
+
+        InvokeRepeating("PopEnemySet3", 48f, 60f);
+        InvokeRepeating("PopEnemySet4", 49f, 60f);
+        InvokeRepeating("PopEnemySet5", 50f, 60f);
+        InvokeRepeating("PopEnemySet3", 55f, 60f);
+        InvokeRepeating("PopEnemySet4", 56f, 60f);
+        InvokeRepeating("PopEnemySet5", 58f, 60f);
     }
 
     // Update is called once per frame
