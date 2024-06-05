@@ -11,8 +11,8 @@ public class PersonManagerScript : MonoBehaviour
     {
         InvokeRepeating("PopPersonSet3", 10f, 13f);
         InvokeRepeating("PopPersonSet6", 12f, 13f);
-        InvokeRepeating("PopPersonSet1", 1f, 60f);
-        InvokeRepeating("PopPersonSet1_1", 2f, 60f);
+        InvokeRepeating("PopPersonSet1", 3f, 60f);
+        InvokeRepeating("PopPersonSet1_1", 4f, 60f);
         InvokeRepeating("PopPersonSet2", 15f, 60f);
 
         InvokeRepeating("PopPersonSet4", 21, 60f);
