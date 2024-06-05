@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 123100334034731718}
   - component: {fileID: 17399605051338870}
   - component: {fileID: 1005131693120794182}
+  - component: {fileID: 4188896500017408009}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Ground
@@ -170,5 +171,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02fa46b58c709484d98aa7a54380f2aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
   kComboTime: 3
   run: {fileID: 317745812314503564, guid: dfb6a91b63552734bb65949b2f7126dc, type: 3}
+--- !u!114 &4188896500017408009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3056373921357490945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 070b01011051df94886d08690eef7326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
