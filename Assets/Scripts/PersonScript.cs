@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -38,6 +39,7 @@ public class PersonScript : MonoBehaviour
     private bool isSharkCollision = false;
 
     [SerializeField] ParticleSystem particle;
+    private float startTime;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +53,12 @@ public class PersonScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        startTime += Time.deltaTime;
         particle.Play();
+        if (startTime >= 2)
+        {
+            particle.Stop();
+        }
         SpriteState();
 
         if (State == PersonSTATE.False)

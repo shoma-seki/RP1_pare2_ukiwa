@@ -22,6 +22,8 @@ public class FloatRingScript : MonoBehaviour
     private Vector2 direction;
     private Vector2 velocity;
 
+    private float floatTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,14 @@ public class FloatRingScript : MonoBehaviour
         {
             DestroySelf();
         }
+        if (State == (int)STATE.Float)
+        {
+            floatTime += Time.deltaTime;
+            if (floatTime >= 4)
+            {
+                State = (int)STATE.False;
+            }
+        }
 
         transform.position = position;
     }
@@ -77,6 +87,7 @@ public class FloatRingScript : MonoBehaviour
                     {
                         other.gameObject.GetComponent<PersonScript>().SetState(PersonScript.PersonSTATE.FloatPull);
                         other.gameObject.GetComponent<PersonScript>().SetTargetPosition(new Vector2(-100, -100));
+                        other.gameObject.GetComponent<PersonScript>().SetPosition(transform.position);
                     }
                     State = (int)STATE.False;
                 }
